@@ -14,6 +14,10 @@
 		123AF694251DFE1500FFBEBB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 123AF693251DFE1500FFBEBB /* Assets.xcassets */; };
 		123AF697251DFE1500FFBEBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 123AF695251DFE1500FFBEBB /* LaunchScreen.storyboard */; };
 		1280D3042534DCD500DA149F /* LastRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1280D3032534DCD500DA149F /* LastRoute.swift */; };
+		12977F892538DD9500815DE6 /* MementoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12977F882538DD9500815DE6 /* MementoVC.swift */; };
+		12B71D7825377ECC00937B88 /* RegistrationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B71D7725377ECC00937B88 /* RegistrationVC.swift */; };
+		12B71D7B25377EE000937B88 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B71D7A25377EE000937B88 /* LoginVC.swift */; };
+		12B71D7E25377EFF00937B88 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B71D7D25377EFF00937B88 /* User.swift */; };
 		12F92F35253599660067AFBF /* MapVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F92F34253599660067AFBF /* MapVC+Ext.swift */; };
 		8244F32CAC5AE401DDDC9824 /* Pods_ProjectMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C79A3C3E1CCD4E4CD2DF4BE4 /* Pods_ProjectMap.framework */; };
 /* End PBXBuildFile section */
@@ -29,6 +33,10 @@
 		123AF698251DFE1500FFBEBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		123D5C092536F4A90029A315 /* ProjectMap.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectMap.entitlements; sourceTree = "<group>"; };
 		1280D3032534DCD500DA149F /* LastRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastRoute.swift; sourceTree = "<group>"; };
+		12977F882538DD9500815DE6 /* MementoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MementoVC.swift; sourceTree = "<group>"; };
+		12B71D7725377ECC00937B88 /* RegistrationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationVC.swift; sourceTree = "<group>"; };
+		12B71D7A25377EE000937B88 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		12B71D7D25377EFF00937B88 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		12F92F34253599660067AFBF /* MapVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapVC+Ext.swift"; sourceTree = "<group>"; };
 		186312566C05B3DDB7FD4F84 /* Pods-ProjectMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectMap.release.xcconfig"; path = "Target Support Files/Pods-ProjectMap/Pods-ProjectMap.release.xcconfig"; sourceTree = "<group>"; };
 		6FCAFD75B186E21CF86A1C69 /* Pods-ProjectMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectMap.debug.xcconfig"; path = "Target Support Files/Pods-ProjectMap/Pods-ProjectMap.debug.xcconfig"; sourceTree = "<group>"; };
@@ -83,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				1280D3032534DCD500DA149F /* LastRoute.swift */,
+				12B71D7D25377EFF00937B88 /* User.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -90,8 +99,8 @@
 		1280D3092534DD0C00DA149F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				123AF68E251DFE1400FFBEBB /* MapVC.swift */,
-				12F92F34253599660067AFBF /* MapVC+Ext.swift */,
+				12977F912538EC5900815DE6 /* Map */,
+				12977F922538EC6B00815DE6 /* Authorization */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -104,6 +113,25 @@
 				123AF693251DFE1500FFBEBB /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		12977F912538EC5900815DE6 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				123AF68E251DFE1400FFBEBB /* MapVC.swift */,
+				12F92F34253599660067AFBF /* MapVC+Ext.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		12977F922538EC6B00815DE6 /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				12B71D7A25377EE000937B88 /* LoginVC.swift */,
+				12B71D7725377ECC00937B88 /* RegistrationVC.swift */,
+				12977F882538DD9500815DE6 /* MementoVC.swift */,
+			);
+			path = Authorization;
 			sourceTree = "<group>";
 		};
 		C9E26A3B5DCE35A47D4FD428 /* Pods */ = {
@@ -257,10 +285,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				12F92F35253599660067AFBF /* MapVC+Ext.swift in Sources */,
+				12B71D7825377ECC00937B88 /* RegistrationVC.swift in Sources */,
+				12B71D7B25377EE000937B88 /* LoginVC.swift in Sources */,
 				123AF68F251DFE1400FFBEBB /* MapVC.swift in Sources */,
+				12B71D7E25377EFF00937B88 /* User.swift in Sources */,
 				123AF68B251DFE1400FFBEBB /* AppDelegate.swift in Sources */,
 				123AF68D251DFE1400FFBEBB /* SceneDelegate.swift in Sources */,
 				1280D3042534DCD500DA149F /* LastRoute.swift in Sources */,
+				12977F892538DD9500815DE6 /* MementoVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

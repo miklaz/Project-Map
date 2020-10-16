@@ -14,7 +14,13 @@ import RealmSwift
 class MapVC: UIViewController {
     
     
-    //MARK: - Const, Var and Outlets
+    // MARK: - Const, Var & Outlets
+    var currentLocation: CLLocation?
+    var route: GMSPolyline?
+    var routePath: GMSMutablePath?
+    var locationManager: CLLocationManager?
+    var tracker: Bool = false // Для переключения состояния трекинга
+    
     @IBOutlet var watchLastRouteButton: UIButton!
     @IBOutlet var switchMyLocationButton: UIButton!
     @IBOutlet var switchTrafficButton: UIButton!
@@ -28,21 +34,17 @@ class MapVC: UIViewController {
         }
     }
     
-    var currentLocation: CLLocation?
-    var route: GMSPolyline?
-    var routePath: GMSMutablePath?
-    var locationManager: CLLocationManager?
-    var tracker: Bool = false // Для переключения состояния трекинга
     
-    
-    // MARK: - Methods
+    // MARK: - VС Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configMap()
         configLocationManager()
     }
-
+    
+    
+    // MARK: - Methods
     func configMap() {  //  Стартовая настойка карты
         mapView.setMinZoom(15, maxZoom: 17)
         
@@ -176,8 +178,6 @@ class MapVC: UIViewController {
     }
     
     @IBAction func routeTracking(_ sender: Any) {   // Вкл/Выкл отслеживания маршрута
-        print("Tracking Button")
-        
         if !tracker {
             startTracking()
         } else {
@@ -186,15 +186,19 @@ class MapVC: UIViewController {
     }
     
     @IBAction func watchLastRoute(_ sender: Any) {  // Показ предыдущего маршрута
-        print("Last Route")
-        
         watchLastRouteButton.setImage(UIImage(systemName: "backward.fill"), for: .normal)
+        
         if tracker {
             finishTracking()
             lastRoute()
         } else {
             lastRoute()
         }
+    }
+    
+    @IBAction func logout(_ sender: Any) {
+        UserDefaults.standard.set(false, forKey: "isLogin")
+        self.dismiss(animated: true, completion: nil)
     }
     
     
