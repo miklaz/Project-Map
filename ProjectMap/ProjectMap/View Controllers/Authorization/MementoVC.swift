@@ -14,6 +14,7 @@ class MementoVC: UIViewController {
     
     // MARK: - Const, Var & Outlets
     var realm: Realm?
+    var appSwitcherView: UIView?
     
     @IBOutlet weak var emailTextField: UITextField!
     
@@ -21,7 +22,55 @@ class MementoVC: UIViewController {
     // MARK: - VС Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        addObservers()
+    }
+    
+    // MARK: - Blur View
+    func addObservers() {   //  Подписка на уведомления.
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(blurTextFields), name: UIApplication.willResignActiveNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(showTextFields), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    @objc func blurTextFields() {   //  Добавление размытия на основной View
+        let screenshot = createScreenshotOfCurrentContext() ?? UIImage()
+        let blurredScreenshot = applyBlurFilter(on: screenshot, withBlurFactor: 4.5)
+        
+        appSwitcherView = UIImageView(image: blurredScreenshot)
+        guard appSwitcherView != nil else { return }
+        self.view.addSubview(appSwitcherView!)
+    }
+    
+    @objc func showTextFields() {   //  Убрать размытие
+        appSwitcherView?.removeFromSuperview()
+    }
+    
+    
+    func createScreenshotOfCurrentContext() -> UIImage? {   //  Создаёт скриншот экрана.
+        UIGraphicsBeginImageContext(self.view.bounds.size)
+        guard let currentContext = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+        view.layer.render(in: currentContext)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+    
+    func applyBlurFilter(on image: UIImage, withBlurFactor blurFactor : CGFloat) -> UIImage? {  //  Применяет к изображению эффект размытия.
+        guard let inputImage = CIImage(image: image) else {
+            return nil
+        }
+        let blurFilter = CIFilter(name: "CIGaussianBlur")
+        blurFilter?.setValue(inputImage, forKey: kCIInputImageKey)
+        blurFilter?.setValue(blurFactor, forKey: kCIInputRadiusKey)
+        guard let outputImage = blurFilter?.outputImage else {
+            return nil
+        }
+        let context = CIContext()
+        guard let cgiImage = context.createCGImage(outputImage, from: outputImage.extent) else { return nil }
+        let bluredImage = UIImage(cgImage: cgiImage)
+        return bluredImage
     }
     
     
