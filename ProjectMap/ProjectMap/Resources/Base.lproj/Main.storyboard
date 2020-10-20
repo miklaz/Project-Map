@@ -201,6 +201,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="pO6-qW-kt1"/>
                     <connections>
+                        <outlet property="loginButton" destination="u2T-EL-Wiu" id="0X8-Fu-lVO"/>
                         <outlet property="loginTextField" destination="0Sw-Wt-SmC" id="vQZ-Mh-VFR"/>
                         <outlet property="passwordTextField" destination="NzM-SG-NVv" id="fhu-45-yjU"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="toMap" id="eWu-fo-ZRg"/>

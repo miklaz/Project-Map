@@ -8,6 +8,8 @@
 
 import UIKit
 import RealmSwift
+import RxSwift
+import RxCocoa
 
 class LoginVC: UIViewController {
     
@@ -18,6 +20,7 @@ class LoginVC: UIViewController {
     
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet var loginButton: UIButton!
     
     
     // MARK: - VС Life Cycle
@@ -29,10 +32,11 @@ class LoginVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         addObservers()
+        configureLoginBindings()
         
-        if UserDefaults.standard.bool(forKey: "isLogin") {  // Если пользователь авторизован
+        /*if UserDefaults.standard.bool(forKey: "isLogin") {  // Если пользователь авторизован
             performSegue(withIdentifier: "toMap", sender: self)
-        }
+        }*/
     }
     
     
@@ -42,6 +46,29 @@ class LoginVC: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true)
     }
+    
+    // Настройка биндингов
+    func configureLoginBindings() {
+        _ = Observable
+            // Объединяем два обсервера в один
+            .combineLatest(
+                // Обсервер изменения текста
+                loginTextField.rx.text,
+                // Обсервер изменения текста
+                passwordTextField.rx.text
+            )
+            // Модифицируем значения из двух обсерверов в один
+            .map { login, password in
+                // Если введены логин и пароль больше 6 символов, будет возвращено “истина”
+                return !(login ?? "").isEmpty && !(password ?? "").isEmpty
+            }
+            // Подписываемся на получение событий
+            .bind { [weak loginButton] inputFilled in
+                // Если событие означает успех, активируем кнопку, иначе деактивируем
+                loginButton?.isEnabled = inputFilled
+            }
+    }
+
     
     
     // MARK: - Blur View

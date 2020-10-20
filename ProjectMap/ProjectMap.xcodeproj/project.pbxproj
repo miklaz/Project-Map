@@ -19,6 +19,7 @@
 		12B71D7B25377EE000937B88 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B71D7A25377EE000937B88 /* LoginVC.swift */; };
 		12B71D7E25377EFF00937B88 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B71D7D25377EFF00937B88 /* User.swift */; };
 		12F92F35253599660067AFBF /* MapVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F92F34253599660067AFBF /* MapVC+Ext.swift */; };
+		12FD4A22253EE52600417E99 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FD4A21253EE52600417E99 /* LocationManager.swift */; };
 		8244F32CAC5AE401DDDC9824 /* Pods_ProjectMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C79A3C3E1CCD4E4CD2DF4BE4 /* Pods_ProjectMap.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,7 @@
 		12B71D7A25377EE000937B88 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		12B71D7D25377EFF00937B88 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		12F92F34253599660067AFBF /* MapVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapVC+Ext.swift"; sourceTree = "<group>"; };
+		12FD4A21253EE52600417E99 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		186312566C05B3DDB7FD4F84 /* Pods-ProjectMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectMap.release.xcconfig"; path = "Target Support Files/Pods-ProjectMap/Pods-ProjectMap.release.xcconfig"; sourceTree = "<group>"; };
 		6FCAFD75B186E21CF86A1C69 /* Pods-ProjectMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectMap.debug.xcconfig"; path = "Target Support Files/Pods-ProjectMap/Pods-ProjectMap.debug.xcconfig"; sourceTree = "<group>"; };
 		C79A3C3E1CCD4E4CD2DF4BE4 /* Pods_ProjectMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,8 +81,9 @@
 				123D5C092536F4A90029A315 /* ProjectMap.entitlements */,
 				123AF68A251DFE1400FFBEBB /* AppDelegate.swift */,
 				123AF68C251DFE1400FFBEBB /* SceneDelegate.swift */,
-				1280D3092534DD0C00DA149F /* View Controllers */,
+				12FD4A24253EE66B00417E99 /* Model */,
 				1280D3082534DCFB00DA149F /* Realm */,
+				1280D3092534DD0C00DA149F /* View Controllers */,
 				1280D30A2534DD6200DA149F /* Resources */,
 				123AF698251DFE1500FFBEBB /* Info.plist */,
 			);
@@ -132,6 +135,14 @@
 				12977F882538DD9500815DE6 /* MementoVC.swift */,
 			);
 			path = Authorization;
+			sourceTree = "<group>";
+		};
+		12FD4A24253EE66B00417E99 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				12FD4A21253EE52600417E99 /* LocationManager.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		C9E26A3B5DCE35A47D4FD428 /* Pods */ = {
@@ -286,6 +297,7 @@
 			files = (
 				12F92F35253599660067AFBF /* MapVC+Ext.swift in Sources */,
 				12B71D7825377ECC00937B88 /* RegistrationVC.swift in Sources */,
+				12FD4A22253EE52600417E99 /* LocationManager.swift in Sources */,
 				12B71D7B25377EE000937B88 /* LoginVC.swift in Sources */,
 				123AF68F251DFE1400FFBEBB /* MapVC.swift in Sources */,
 				12B71D7E25377EFF00937B88 /* User.swift in Sources */,
@@ -443,6 +455,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6888952VPD;
 				INFOPLIST_FILE = ProjectMap/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -464,6 +477,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6888952VPD;
 				INFOPLIST_FILE = ProjectMap/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
