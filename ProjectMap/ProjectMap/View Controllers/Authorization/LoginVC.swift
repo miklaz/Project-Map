@@ -34,9 +34,6 @@ class LoginVC: UIViewController {
         addObservers()
         configureLoginBindings()
         
-        /*if UserDefaults.standard.bool(forKey: "isLogin") {  // Если пользователь авторизован
-            performSegue(withIdentifier: "toMap", sender: self)
-        }*/
     }
     
     
@@ -139,7 +136,9 @@ class LoginVC: UIViewController {
             showMassage("Пользователя с таким логином и паролем не существует!")
             return
         }
-
+        
+        loginTextField.text = ""
+        passwordTextField.text = ""
         UserDefaults.standard.set(true, forKey: "isLogin")  //  Флаг авторизации
         performSegue(withIdentifier: "toMap", sender: sender)
     }
@@ -164,5 +163,5 @@ class LoginVC: UIViewController {
         showMassage("Ссылка на файл Realm скопирована в буфер обмена!")
     }
     
-
+    
 }

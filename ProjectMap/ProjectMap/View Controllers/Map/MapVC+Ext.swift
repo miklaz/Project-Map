@@ -26,12 +26,6 @@ extension MapVC: CLLocationManagerDelegate {
 
 extension MapVC: GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTapPOIWithPlaceID placeID: String, name: String, location: CLLocationCoordinate2D) {
-        /*infoMarker.snippet = "Долгота: \(location.latitude),\nширота: \(location.longitude)"
-        infoMarker.position = location
-        infoMarker.title = name
-        infoMarker.opacity = 0
-        infoMarker.infoWindowAnchor.y = 0.4
-        infoMarker.map = mapView
-        mapView.selectedMarker = infoMarker*/
+        
     }
 }
