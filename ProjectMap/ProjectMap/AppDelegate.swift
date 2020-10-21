@@ -8,42 +8,37 @@
 
 import UIKit
 import GoogleMaps
-import GooglePlaces
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    //var timer: Timer?
-    //var beginBackgroundTask: UIBackgroundTaskIdentifier?
-    //var timerCount = 10
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        GMSServices.provideAPIKey("AIzaSyBYO_jJYjF6EnHl8hN_QsSKxBjcwqtUI3c")
-        GMSPlacesClient.provideAPIKey("AIzaSyBYO_jJYjF6EnHl8hN_QsSKxBjcwqtUI3c")
         
+        GMSServices.provideAPIKey("AIzaSyBYO_jJYjF6EnHl8hN_QsSKxBjcwqtUI3c")    //  Ключ для GMaps
         
-        /*beginBackgroundTask = UIApplication.shared.beginBackgroundTask(expirationHandler: {
-            [weak self] in
-            guard let strongSelf = self else {return}
-            
-            UIApplication.shared.endBackgroundTask(strongSelf.beginBackgroundTask!)
-            strongSelf.beginBackgroundTask = UIBackgroundTaskIdentifier.invalid
-        })
-        
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {
-            [weak self] (_) in
-            //print(Date())
-            if self?.timerCount == 0 {
-                self?.timer?.invalidate()
-                UIApplication.shared.endBackgroundTask((self?.beginBackgroundTask!)!)
-                self?.beginBackgroundTask = UIBackgroundTaskIdentifier.invalid
-            } else {
-                self?.timerCount -= 1
+        let center = UNUserNotificationCenter.current() //  Получение разрешения на отправку уведомлений
+        center.requestAuthorization(options: [.alert, .badge,.sound]) { (granted, error) in
+            guard granted else {
+                print("Разрешение не получено")
+                return
             }
-            
-        })*/
-        
+            self.sendNotificatioRequest(
+                content: self.makeNotificationContent(),
+                trigger: self.makeIntervalNotificatioTrigger()
+            )
+        }
+        center.getNotificationSettings { settings in
+            switch settings.authorizationStatus {
+            case .notDetermined:
+                print("Пользователь ещё не выбирал отправлять ли ему уведомления.")
+            case .denied:
+                print("Разрешения на отправку уведомлений НЕТ!")
+            case .authorized:
+                print("Разрешение на отправку уведомлений ЕСТЬ!")
+            default: break
+            }
+        }
         
         return true
     }
@@ -62,6 +57,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
+    
+    
+    // MARK: - Notifications
+    func makeNotificationContent() -> UNNotificationContent {
+        let content = UNMutableNotificationContent()    //  Настройка самого уведомления
+        content.title = "Возвращайся!"
+        content.body = "Тут можно открыть крату, а так же посмотреть свой пройденый маршрут!"
+        content.badge = 1   //  Наклейка с кол-м уведомлений
+        return content
+    }
+    
+    func makeIntervalNotificatioTrigger() -> UNNotificationTrigger {
+        return UNTimeIntervalNotificationTrigger(
+            timeInterval: 60,   //  Кол-во секунд до показа уведомления
+            repeats: false
+        )
+    }
 
+    func sendNotificatioRequest(
+        content: UNNotificationContent,
+        trigger: UNNotificationTrigger) {
+        
+        let request = UNNotificationRequest(    //  Запрос на показ уведомления
+            identifier: "alaram",
+            content: content,
+            trigger: trigger
+        )
+        
+        let center = UNUserNotificationCenter.current() //  Добавление запроса в центр уведомлений
+        center.add(request) { error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+    
 }
 

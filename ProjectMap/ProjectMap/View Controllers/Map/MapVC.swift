@@ -8,7 +8,6 @@
 
 import UIKit
 import GoogleMaps
-import GooglePlaces
 import CoreLocation
 import RealmSwift
 
@@ -19,16 +18,9 @@ class MapVC: UIViewController {
     var currentLocation: CLLocation?
     var route: GMSPolyline?
     var routePath: GMSMutablePath?
-    //LocationManager.instance
-    //var locationManager: CLLocationManager?
-    var locationManager = LocationManager.instance                           //
+    var locationManager: CLLocationManager?
     var tracker: Bool = false // Для переключения состояния трекинга
     var appSwitcherView: UIView?
-    var placesClient: GMSPlacesClient! // Данные о местах.
-    // Уровень приближения камеры (зум) к карте при точно известном местоположении пользователя.
-    var preciseLocationZoomLevel: Float = 15.0
-    // При приблизительно известном местоположении.
-    var approximateLocationZoomLevel: Float = 10.0
     
     @IBOutlet var watchLastRouteButton: UIButton!
     @IBOutlet var switchMyLocationButton: UIButton!
@@ -74,24 +66,14 @@ class MapVC: UIViewController {
         routePath = GMSMutablePath()
         route?.map = mapView
         
-        let zoomLevel = locationManager.locationManager.accuracyAuthorization == .fullAccuracy ? preciseLocationZoomLevel : approximateLocationZoomLevel
-        
-        _ = locationManager
-            .location
-            .asObservable()
-            .bind { [weak self] location in
-                guard let location = location else { return }
-                self?.routePath?.add(location.coordinate)
-                // Обновляем путь у линии маршрута путём повторного присвоения.
-                self?.route?.path = self?.routePath
-                
-                // Чтобы наблюдать за движением, установим камеру на только что добавленную точку.
-                let position = GMSCameraPosition.camera(withTarget: location.coordinate, zoom: zoomLevel)
-                self?.mapView.animate(to: position)
-            }
-        placesClient = GMSPlacesClient.shared()
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        locationManager?.allowsBackgroundLocationUpdates = true
+        locationManager?.pausesLocationUpdatesAutomatically = false
+        locationManager?.startMonitoringSignificantLocationChanges()
+        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager?.requestAlwaysAuthorization()
     }
-    
     
     func addLastRoute() {   //  Сохранение маршрута в Realm
         do {
@@ -153,7 +135,7 @@ class MapVC: UIViewController {
         route?.map = mapView
         route?.strokeWidth = 3
         route?.strokeColor = .systemBlue
-        locationManager.startUpdatingLocation()
+        locationManager?.startUpdatingLocation()
     }
     
     func finishTracking () {    //  Конец отслеживания маршрута
@@ -162,7 +144,7 @@ class MapVC: UIViewController {
         routeTrackingButton.backgroundColor = .systemBlue
         routeTrackingButton.setTitle("Отслеживать", for: .normal)
         
-        locationManager.stopUpdatingLocation()
+        locationManager?.stopUpdatingLocation()
         mapView.clear()
         do {
             let realm = try Realm()

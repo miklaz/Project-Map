@@ -10,7 +10,5 @@ target 'ProjectMap' do
   pod 'GooglePlaces'
   pod 'Realm'
   pod 'RealmSwift'
-  pod 'RxSwift'
-  pod 'RxCocoa'
   
 end
