@@ -13,8 +13,11 @@
 		123AF692251DFE1400FFBEBB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 123AF690251DFE1400FFBEBB /* Main.storyboard */; };
 		123AF694251DFE1500FFBEBB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 123AF693251DFE1500FFBEBB /* Assets.xcassets */; };
 		123AF697251DFE1500FFBEBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 123AF695251DFE1500FFBEBB /* LaunchScreen.storyboard */; };
+		1275DEF125408A73008CC6C3 /* PhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275DEF025408A73008CC6C3 /* PhotoVC.swift */; };
 		1280D3042534DCD500DA149F /* LastRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1280D3032534DCD500DA149F /* LastRoute.swift */; };
 		12977F892538DD9500815DE6 /* MementoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12977F882538DD9500815DE6 /* MementoVC.swift */; };
+		12A2D1DC25500F7E00AADA6B /* PhotoVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A2D1DB25500F7E00AADA6B /* PhotoVC+Ext.swift */; };
+		12A77AB4254DF5BE0081B75B /* Singlton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A77AB3254DF5BE0081B75B /* Singlton.swift */; };
 		12B71D7825377ECC00937B88 /* RegistrationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B71D7725377ECC00937B88 /* RegistrationVC.swift */; };
 		12B71D7B25377EE000937B88 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B71D7A25377EE000937B88 /* LoginVC.swift */; };
 		12B71D7E25377EFF00937B88 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B71D7D25377EFF00937B88 /* User.swift */; };
@@ -32,8 +35,11 @@
 		123AF696251DFE1500FFBEBB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		123AF698251DFE1500FFBEBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		123D5C092536F4A90029A315 /* ProjectMap.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectMap.entitlements; sourceTree = "<group>"; };
+		1275DEF025408A73008CC6C3 /* PhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoVC.swift; sourceTree = "<group>"; };
 		1280D3032534DCD500DA149F /* LastRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastRoute.swift; sourceTree = "<group>"; };
 		12977F882538DD9500815DE6 /* MementoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MementoVC.swift; sourceTree = "<group>"; };
+		12A2D1DB25500F7E00AADA6B /* PhotoVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoVC+Ext.swift"; sourceTree = "<group>"; };
+		12A77AB3254DF5BE0081B75B /* Singlton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Singlton.swift; sourceTree = "<group>"; };
 		12B71D7725377ECC00937B88 /* RegistrationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationVC.swift; sourceTree = "<group>"; };
 		12B71D7A25377EE000937B88 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		12B71D7D25377EFF00937B88 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -79,12 +85,30 @@
 				123D5C092536F4A90029A315 /* ProjectMap.entitlements */,
 				123AF68A251DFE1400FFBEBB /* AppDelegate.swift */,
 				123AF68C251DFE1400FFBEBB /* SceneDelegate.swift */,
+				1275DEE825407F32008CC6C3 /* Model */,
 				1280D3092534DD0C00DA149F /* View Controllers */,
 				1280D3082534DCFB00DA149F /* Realm */,
 				1280D30A2534DD6200DA149F /* Resources */,
 				123AF698251DFE1500FFBEBB /* Info.plist */,
 			);
 			path = ProjectMap;
+			sourceTree = "<group>";
+		};
+		1275DEE825407F32008CC6C3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				12A77AB3254DF5BE0081B75B /* Singlton.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		127E62DA2546B12900A109C6 /* Photo */ = {
+			isa = PBXGroup;
+			children = (
+				1275DEF025408A73008CC6C3 /* PhotoVC.swift */,
+				12A2D1DB25500F7E00AADA6B /* PhotoVC+Ext.swift */,
+			);
+			path = Photo;
 			sourceTree = "<group>";
 		};
 		1280D3082534DCFB00DA149F /* Realm */ = {
@@ -99,6 +123,7 @@
 		1280D3092534DD0C00DA149F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				127E62DA2546B12900A109C6 /* Photo */,
 				12977F912538EC5900815DE6 /* Map */,
 				12977F922538EC6B00815DE6 /* Authorization */,
 			);
@@ -290,7 +315,10 @@
 				123AF68F251DFE1400FFBEBB /* MapVC.swift in Sources */,
 				12B71D7E25377EFF00937B88 /* User.swift in Sources */,
 				123AF68B251DFE1400FFBEBB /* AppDelegate.swift in Sources */,
+				12A77AB4254DF5BE0081B75B /* Singlton.swift in Sources */,
+				12A2D1DC25500F7E00AADA6B /* PhotoVC+Ext.swift in Sources */,
 				123AF68D251DFE1400FFBEBB /* SceneDelegate.swift in Sources */,
+				1275DEF125408A73008CC6C3 /* PhotoVC.swift in Sources */,
 				1280D3042534DCD500DA149F /* LastRoute.swift in Sources */,
 				12977F892538DD9500815DE6 /* MementoVC.swift in Sources */,
 			);

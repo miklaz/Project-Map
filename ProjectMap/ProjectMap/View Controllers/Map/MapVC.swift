@@ -19,18 +19,20 @@ class MapVC: UIViewController {
     var route: GMSPolyline?
     var routePath: GMSMutablePath?
     var locationManager: CLLocationManager?
-    var tracker: Bool = false // Для переключения состояния трекинга
-    var appSwitcherView: UIView?
+    var tracker: Bool = false       // Для переключения состояния трекинга
+    var appSwitcherView: UIView?    // Blur эффект
+    
+    
+    var autoMarker: GMSMarker?  //  Маркер с фотографией пользователя
     
     @IBOutlet var watchLastRouteButton: UIButton!
-    @IBOutlet var switchMyLocationButton: UIButton!
     @IBOutlet var switchTrafficButton: UIButton!
     @IBOutlet var routeTrackingButton: UIButton!
     @IBOutlet weak var mapView: GMSMapView! {
         didSet {
             mapView.delegate = self
             mapView.isTrafficEnabled = true
-            mapView.isMyLocationEnabled = true
+            mapView.isMyLocationEnabled = false
             mapView.settings.compassButton = true
         }
     }
@@ -48,9 +50,9 @@ class MapVC: UIViewController {
     
     // MARK: - Methods
     func configMap() {  //  Стартовая настойка карты
-        mapView.setMinZoom(15, maxZoom: 17)
+        mapView.setMinZoom(11, maxZoom: 15)
         
-        do {    // Удаление маршрута с предыдущего запуска
+        do {    //  Удаление маршрута с предыдущего запуска
             let realm = try Realm()
             try realm.write {
                 realm.deleteAll()
@@ -62,9 +64,6 @@ class MapVC: UIViewController {
     
     func configLocationManager() {
         route?.map = nil
-        route = GMSPolyline()
-        routePath = GMSMutablePath()
-        route?.map = mapView
         
         locationManager = CLLocationManager()
         locationManager?.delegate = self
@@ -75,6 +74,7 @@ class MapVC: UIViewController {
         locationManager?.requestAlwaysAuthorization()
     }
     
+    // MARK: - Tracking
     func addLastRoute() {   //  Сохранение маршрута в Realm
         do {
             let realm = try Realm()
@@ -104,7 +104,7 @@ class MapVC: UIViewController {
         route = GMSPolyline()
         routePath = GMSMutablePath()
         route?.map = mapView
-        route?.strokeWidth = 5
+        route?.strokeWidth = 3
         route?.strokeColor = .systemRed
 
         for coordinates in lastRoute {
@@ -157,9 +157,36 @@ class MapVC: UIViewController {
         addLastRoute()
     }
     
+    // MARK: - Image Marker
+    func removeMarker() {
+        autoMarker?.map = nil
+        autoMarker = nil
+    }
+    
+    func drawImageWithProfilePic(pp: UIImage) -> UIImage {  //  Обработка аватара
+        let picImgView = UIImageView(image: pp)
+        picImgView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        picImgView.layer.cornerRadius = picImgView.frame.width/2
+        picImgView.clipsToBounds = true
+        picImgView.setNeedsLayout()
+
+        let newImage = imageWithView(view: picImgView)
+        return newImage
+    }
+
+    func imageWithView(view: UIView) -> UIImage {
+        var image: UIImage?
+        UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, 0.0)
+        if let context = UIGraphicsGetCurrentContext() {
+            view.layer.render(in: context)
+            image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+        }
+        return image ?? UIImage()
+    }
     
     // MARK: - Blur View
-    func addObservers() {   //  Подписка на уведомления.
+    func addObservers() {           //  Подписка на уведомления.
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(blurTextFields), name: UIApplication.willResignActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(showTextFields), name: UIApplication.didBecomeActiveNotification, object: nil)
@@ -206,9 +233,9 @@ class MapVC: UIViewController {
         return bluredImage
     }
     
-    
+ 
     // MARK: - IBActions
-    @IBAction func switchTraffic(_ sender: Any) {   // Вкл/Выкл покзаз пробок
+    @IBAction func switchTraffic(_ sender: Any) {       // Вкл/Выкл покзаз пробок
         if !mapView.isTrafficEnabled {
             switchTrafficButton.setImage(UIImage(systemName: "car.fill"), for: .normal)
             mapView.isTrafficEnabled = true
@@ -218,17 +245,7 @@ class MapVC: UIViewController {
         }
     }
     
-    @IBAction func switchMyLocation(_ sender: Any) {    // Вкл/Выкл показ текущего местоположения
-        if !mapView.isMyLocationEnabled {
-            switchMyLocationButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
-            mapView.isMyLocationEnabled = true
-        } else {
-            switchMyLocationButton.setImage(UIImage(systemName: "location"), for: .normal)
-            mapView.isMyLocationEnabled = false
-        }
-    }
-    
-    @IBAction func routeTracking(_ sender: Any) {   // Вкл/Выкл отслеживания маршрута
+    @IBAction func routeTracking(_ sender: Any) {       // Вкл/Выкл отслеживания маршрута
         if !tracker {
             startTracking()
         } else {
@@ -236,7 +253,7 @@ class MapVC: UIViewController {
         }
     }
     
-    @IBAction func watchLastRoute(_ sender: Any) {  // Показ предыдущего маршрута
+    @IBAction func watchLastRoute(_ sender: Any) {      // Показ предыдущего маршрута
         watchLastRouteButton.setImage(UIImage(systemName: "backward.fill"), for: .normal)
         
         if tracker {
@@ -249,6 +266,8 @@ class MapVC: UIViewController {
     
     @IBAction func logout(_ sender: Any) {
         UserDefaults.standard.set(false, forKey: "isLogin")
+        Singlton.shared.photo = UIImage(systemName: "person.circle.fill")
+        
         self.dismiss(animated: true, completion: nil)
     }
     

@@ -45,7 +45,7 @@ class LoginVC: UIViewController {
     
     
     // MARK: - Blur View
-    func addObservers() {   //  Подписка на уведомления.
+    func addObservers() {           //  Подписка на уведомления.
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(blurTextFields), name: UIApplication.willResignActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(showTextFields), name: UIApplication.didBecomeActiveNotification, object: nil)
@@ -119,25 +119,12 @@ class LoginVC: UIViewController {
         performSegue(withIdentifier: "toMap", sender: sender)
     }
     
-    @IBAction func registration(_ sender: Any) {        //  Переход на экран регистрации
+    @IBAction func registration(_ sender: Any) {            //  Переход на экран регистрации
         performSegue(withIdentifier: "toRegistration", sender: sender)
     }
     
-    @IBAction func rememberPassword(_ sender: Any) {    //  Переход на экран восстановления пароля
+    @IBAction func rememberPassword(_ sender: Any) {        //  Переход на экран восстановления пароля
         performSegue(withIdentifier: "toMemento", sender: sender)
     }
-    
-    //  Копирует адрес файла Realm и удаляет лишние символы для корректной вставки в Finder
-    @IBAction func copyRealmFileAdress(_ sender: Any) {
-        
-        var realmFileAdress: String = "\(Realm.Configuration.defaultConfiguration.fileURL!)"
-        let range = realmFileAdress.index(realmFileAdress.startIndex, offsetBy: 0)..<realmFileAdress.index(realmFileAdress.startIndex, offsetBy: 7)
-        realmFileAdress.removeSubrange(range)
-        
-        UIPasteboard.general.string = realmFileAdress
-        
-        showMassage("Ссылка на файл Realm скопирована в буфер обмена!")
-    }
-    
 
 }

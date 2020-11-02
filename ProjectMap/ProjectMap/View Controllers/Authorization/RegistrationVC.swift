@@ -96,6 +96,7 @@ class RegistrationVC: UIViewController {
         return bluredImage
     }
     
+    
     // MARK: - IBActions
     @IBAction func signUpTapped(_ sender: Any) {    //  Регистрация
         let error = validateFields()
@@ -121,7 +122,7 @@ class RegistrationVC: UIViewController {
                 self.showMassage("\(error)")
             }
         }
-        let alert = UIAlertController(title: "Вы зарегистрированиы!", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Вы зарегистрированы!", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
             self.dismiss(animated: true, completion: nil)
         }))

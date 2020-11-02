@@ -17,6 +17,15 @@ extension MapVC: CLLocationManagerDelegate {
         routePath?.add(location.coordinate)
         route?.path = routePath
         mapView.animate(toLocation: location.coordinate)
+        
+        self.removeMarker()
+
+        let autoMarker = GMSMarker(position: location.coordinate)   //  Маркер с координатами текущего местоположения
+        autoMarker.icon = drawImageWithProfilePic(pp: (Singlton.shared.photo ?? UIImage(systemName: "person.circle.fill"))!)    //  Установка маркера на карту
+        
+        autoMarker.map = mapView
+        self.autoMarker = autoMarker
+        mapView.animate(toLocation: location.coordinate)    //  Перемещение к позиции
     }
     
      func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
